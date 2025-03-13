@@ -1,7 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 
 @Schema({ timestamps: true })
-class Task {
+export class Task {
   @Prop({
     type: String,
     required: true,
