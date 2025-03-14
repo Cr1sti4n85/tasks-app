@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TasksModule } from './tasks/tasks.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { EnvConfiguration } from './config/app.config';
@@ -7,9 +7,17 @@ import { EnvConfiguration } from './config/app.config';
 @Module({
   imports: [
     ConfigModule.forRoot({
-      load: [EnvConfiguration],
+      isGlobal: true,
+      envFilePath: `.env`,
     }),
-    MongooseModule.forRoot(EnvConfiguration().mongodb),
+    MongooseModule.forRootAsync({
+      inject: [ConfigService],
+      useFactory: (configService: ConfigService) => {
+        return {
+          uri: configService.getOrThrow('MONGO_URI'),
+        };
+      },
+    }),
     TasksModule,
   ],
 })
