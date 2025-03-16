@@ -6,6 +6,7 @@ export class Task {
     type: String,
     required: true,
     trim: true,
+    unique: true,
   })
   title: string;
 
