@@ -9,6 +9,7 @@ import {
 } from '@nestjs/common';
 import { TasksService } from './tasks.service';
 import { CreateTaskDto } from 'src/dto/create-task.dto';
+import { UpdateTaskDto } from 'src/dto/update-task.dto';
 
 @Controller('tasks')
 export class TasksController {
@@ -19,7 +20,7 @@ export class TasksController {
     return this.taskService.findAll();
   }
 
-  @Get()
+  @Get(':id')
   findOne(@Param('id') id: string) {
     return this.taskService.findOne(id);
   }
@@ -30,5 +31,12 @@ export class TasksController {
   }
 
   @Put(':id')
-  update(@Param('id') id: string, @Body() task: CreateTaskDto) {}
+  update(@Param('id') id: string, @Body() task: UpdateTaskDto) {
+    return this.taskService.update(id, task);
+  }
+
+  @Delete(':id')
+  remove(@Param('id') id: string) {
+    return this.taskService.remove(id);
+  }
 }

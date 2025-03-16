@@ -12,7 +12,7 @@ export class TasksService {
   ) {}
 
   async findAll() {
-    await this.taskModel.find();
+    return this.taskModel.find();
   }
 
   async create(createTask: CreateTaskDto) {
@@ -22,14 +22,14 @@ export class TasksService {
   }
 
   async findOne(id: string) {
-    await this.taskModel.findById(id);
+    return this.taskModel.findById(id);
   }
 
   async update(id: string, updateTask: UpdateTaskDto) {
-    await this.taskModel.findByIdAndUpdate(id, updateTask, { new: true });
+    return this.taskModel.findByIdAndUpdate(id, updateTask, { new: true });
   }
 
   async remove(id: string) {
-    await this.taskModel.findByIdAndDelete(id);
+    return this.taskModel.findByIdAndDelete(id);
   }
 }
